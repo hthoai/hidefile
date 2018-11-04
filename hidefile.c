@@ -298,13 +298,12 @@ static struct inode_operations new_iop =
 /*Allocate memmory for arrays*/
 void allocate_memmory(void)
 {
+    
     g_old_inode_pointer = (void *)kmalloc(sizeof(void *), GFP_KERNEL);
     g_old_fop_pointer = (void *)kmalloc(sizeof(void *), GFP_KERNEL);
     g_old_iop_pointer = (void *)kmalloc(sizeof(void *), GFP_KERNEL);
-
     g_old_parent_inode_pointer = (void *)kmalloc(sizeof(void *), GFP_KERNEL);
     g_old_parent_fop_pointer = (void *)kmalloc(sizeof(void *), GFP_KERNEL);
-
     g_inode_numbers = (unsigned long *)kmalloc(sizeof(unsigned long), GFP_KERNEL);
 }
 
@@ -314,11 +313,15 @@ void reallocate_memmory(void)
     g_inode_numbers = (unsigned long *)krealloc(g_inode_numbers, sizeof(unsigned long *) * (g_inode_count + 1), GFP_KERNEL);
 
     /*Realloc memmory for old pointers*/
+    // Array of pointers to original inode structure for hidden files.
     g_old_inode_pointer = (void *)krealloc(g_old_inode_pointer, sizeof(void *) * (g_inode_count + 1), GFP_KERNEL);
+    // Array of pointers to original file_operations structure for hidden files.
     g_old_fop_pointer = (void *)krealloc(g_old_fop_pointer, sizeof(void *) * (g_inode_count + 1), GFP_KERNEL);
+    // Array of pointers to original inode_opearations structure for hidden files.
     g_old_iop_pointer = (void *)krealloc(g_old_iop_pointer, sizeof(void *) * (g_inode_count + 1), GFP_KERNEL);
-
+    // Array of pointers to original inode structure for parent directory that contains hidden files.
     g_old_parent_inode_pointer = (void *)krealloc(g_old_parent_inode_pointer, sizeof(void *) * (g_inode_count + 1), GFP_KERNEL);
+    // Array of pointers to original file_operations structure for parent directory that contains hidden files.
     g_old_parent_fop_pointer = (void *)krealloc(g_old_parent_fop_pointer, sizeof(void *) * (g_inode_count + 1), GFP_KERNEL);
 }
 
